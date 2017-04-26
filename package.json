@@ -1,0 +1,16 @@
+{
+  "name": "iogametest",
+  "version": "1.0.0",
+  "description": "a simple test",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Enclo",
+  "license": "ISC",
+  "dependencies": {
+      "express": "*",
+      "socket.io": "^1.7.3"
+  }
+}
