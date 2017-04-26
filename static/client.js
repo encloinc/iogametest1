@@ -2,12 +2,23 @@
 var canvas = document.getElementById("client");
 var socket = io();
 
+var ready_bool = false;
+
+var ready = function() {
+  if (ready_bool == false) {
+    ready_bool = true;
+    setInterval(function () {
+      socket.emit("updatePosServer", [id, circle.x, circle.y])
+    }, 10);
+  }
+}
+
 if (canvas.getContext){
-    
+
     //Gets the rendering type from webgl, creates object to draw stuff on canvas
-    
+
     var context = canvas.getContext('2d');
-    
+
     //Animation frame updater, the script allows the animation to work on all websites
     function clearArc(x, y, radius) {
       context.save();
@@ -26,23 +37,23 @@ if (canvas.getContext){
         function(callback) {
             return setTimeout(callback, 16);
         }
-    
+
     //defines object for the render function
-    
+
     var circle ={
         'x': 50,
         'y': 50,
         'radius': 20,
         'fill': "green",
         'linefill': "#222"
-        
+
     }
-    
+
     var users ={
     }
-    
+
     var id = "NAN";
-    
+
     var render = function(){
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.beginPath()
@@ -63,10 +74,11 @@ if (canvas.getContext){
             context.stroke()
         }
         requestAnimationFrame(render)
-        
+
     }
     render()
     var animate = function(prop, val, duration){
+        ready();
         var start = new Date().getTime()
         var end = start + duration
         var current = circle[prop]
@@ -75,7 +87,7 @@ if (canvas.getContext){
             var timestamp = new Date().getTime()
             var progress = Math.min((duration - (end - timestamp)) / duration, 1);
             circle[prop] = current + (distance * progress)
-            socket.emit("updatePosServer", [id, circle.x, circle.y])
+            console.log([id, circle.x, circle.y])
             if (progress < 1) {
                 requestAnimationFrame(step)
             }
@@ -103,14 +115,14 @@ if (canvas.getContext){
             e.preventDefault()
             animate(info[0], circle[info[0]] + info[1], 1000)
         }
-        
+
     })
     document.body.addEventListener('keyup', function(e){
        var info = meta(e)
         if (info){
             e.preventDefault()
             animate(info[0], circle[info[0]], 1000)
-        } 
+        }
     })
     socket.on('updateUsers', function(nuo){
         if (id == "NAN"){

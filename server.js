@@ -1,4 +1,4 @@
-var express = require("express");
+express = require("express");
 var app = express();
 var server = require("http").createServer(app)
 var io = require("socket.io").listen(server)
@@ -22,9 +22,9 @@ io.on("connection", function(socket){
     users[cnl.toString()] = [50, 50]
     io.emit('updateUsers', users)
     socket.on('updatePosServer', function(payload){
-        console.log(payload)
         users[payload[0].toString()][0] = payload[1]
         users[payload[0].toString()][1] = payload[2]
+        console.log(users);
         io.emit("updateUsers", users)
     })
     socket.on("disconnect", function(){
