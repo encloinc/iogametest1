@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Fredoka+One');
+.text{
+    font-family: 'Fredoka One', cursive;
+    font-size: 70px;
+    color: white;
+}
+body{
+    background-color: #111;
+}
+#client {
+    position: absolute;
+    border-style: solid;
+    border-color: #222;
+    border-width: 10px;
+    background-image: url("5151vamxcmlx.png");
+    border-radius: 10px;
+    right: 18%;
+    bottom: 20%;
+}
